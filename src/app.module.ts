@@ -8,6 +8,7 @@ import { UsersModule } from './users/users.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { AuthModule } from './auth/auth.module';
 import { LoginController } from './login/login.controller';
+import { ListsModule } from './lists/lists.module';
 
 @Module({
   imports: [
@@ -40,6 +41,7 @@ import { LoginController } from './login/login.controller';
       ],
     }),
     AuthModule,
+    ListsModule,
   ],
   controllers: [AppController, LoginController],
 })

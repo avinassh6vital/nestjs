@@ -6,6 +6,8 @@ import { databaseConfig } from './config/database.config';
 import { User } from './models/user.model';
 import { UsersModule } from './users/users.module';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { AuthModule } from './auth/auth.module';
+import { LoginController } from './login/login.controller';
 
 @Module({
   imports: [
@@ -37,7 +39,8 @@ import { ThrottlerModule } from '@nestjs/throttler';
         },
       ],
     }),
+    AuthModule,
   ],
-  controllers: [AppController],
+  controllers: [AppController, LoginController],
 })
 export class AppModule {}

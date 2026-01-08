@@ -20,10 +20,6 @@ import { ThrottlerModule } from '@nestjs/throttler';
     UsersModule,
     ThrottlerModule.forRoot({
       throttlers: [
-        // {
-        //   ttl: 60000,
-        //   limit: 10,
-        // },
         {
           name: 'short',
           ttl: 1000,

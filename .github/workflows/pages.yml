@@ -1,0 +1,58 @@
+name: Deploy to GitHub Pages
+
+# Deploys the built NestJS static output to GitHub Pages.
+# Runs on pushes to the avi branch or manual workflow dispatches.
+
+on:
+  push:
+    branches:
+      - avi
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout repository code so the workflow can access source files.
+      - uses: actions/checkout@v4
+
+      # Install the desired Node.js version and enable npm caching for faster builds.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # Install project dependencies using a clean npm install.
+      - name: Install dependencies
+        run: npm ci
+
+      # Compile the NestJS application to the dist/ output folder.
+      - name: Build project
+        run: npm run build
+
+      # Upload the build output as the artifact consumed by the deploy job.
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      # Publish the uploaded artifact to the GitHub Pages environment.
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

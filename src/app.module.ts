@@ -7,7 +7,7 @@ import { User } from './models/user.model';
 import { UsersModule } from './users/users.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { AuthModule } from './auth/auth.module';
-import { LoginController } from './login/login.controller';
+//import { LoginController } from './login/login.controller';
 
 @Module({
   imports: [
@@ -20,6 +20,7 @@ import { LoginController } from './login/login.controller';
       models: [User],
     }),
     UsersModule,
+    AuthModule,
     ThrottlerModule.forRoot({
       throttlers: [
         {
@@ -41,6 +42,6 @@ import { LoginController } from './login/login.controller';
     }),
     AuthModule,
   ],
-  controllers: [AppController, LoginController],
+  controllers: [AppController],
 })
 export class AppModule {}

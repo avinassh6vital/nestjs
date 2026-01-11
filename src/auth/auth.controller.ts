@@ -11,6 +11,7 @@ import {
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 import type { RequestWithUser } from './auth.guard';
+import { LocalAuthGuard } from './local-auth.guard';
 
 interface SignInDto {
   username: string;
@@ -33,4 +34,16 @@ export class AuthController {
   getProfile(@Request() req: RequestWithUser) {
     return req.user;
   }
+
+  @UseGuards(LocalAuthGuard)
+  @Post('login-v2')
+  login(@Request() req: RequestWithUser) {
+    return req.user;
+  }
+
+//   @UseGuards(LocalAuthGuard)
+//   @Post('logout')
+//   logout(@Request() req: RequestWithUser) {
+//     return req.logout();
+//   }
 }

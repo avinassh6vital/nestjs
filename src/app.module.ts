@@ -6,6 +6,11 @@ import { databaseConfig } from './config/database.config';
 import { User } from './models/user.model';
 import { UsersModule } from './users/users.module';
 import { ThrottlerModule } from '@nestjs/throttler';
+import { AuthModule } from './auth/auth.module';
+//import { ScheduleModule } from '@nestjs/schedule';
+import { TasksService } from './tasks-service/tasks-service.service';
+//import { LoginController } from './login/login.controller';
+import { AuthV2Controller } from './auth-v2/auth-v2.controller';
 
 @Module({
   imports: [
@@ -18,6 +23,7 @@ import { ThrottlerModule } from '@nestjs/throttler';
       models: [User],
     }),
     UsersModule,
+    AuthModule,
     ThrottlerModule.forRoot({
       throttlers: [
         {
@@ -37,7 +43,10 @@ import { ThrottlerModule } from '@nestjs/throttler';
         },
       ],
     }),
+    AuthModule,
+    //ScheduleModule.forRoot(),
   ],
-  controllers: [AppController],
+  controllers: [AppController, AuthV2Controller],
+  providers: [TasksService],
 })
 export class AppModule {}

@@ -13,5 +13,5 @@ export const databaseConfig: SequelizeModuleOptions = {
 };
 
 export const mongooseConfig = {
-  uri: process.env.MONGO_URI || 'mongodb://localhost:27017/practice',
+  uri: 'mongodb+srv://avinashkolluru1666_db_user:VXWJy2QSw02Ykg0T@myfirstcluster.d6ixivc.mongodb.net/?appName=myfirstCluster',
 };

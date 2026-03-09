@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-// import { SequelizeModule } from '@nestjs/sequelize';
+import { SequelizeModule } from '@nestjs/sequelize';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
-// import { databaseConfig } from './config/database.config';
-// import { User } from './models/user.model';
+import { databaseConfig } from './config/database.config';
+import { User } from './models/user.model';
 import { UsersModule } from './users/users.module';
 import { ThrottlerModule } from '@nestjs/throttler';
 import { AuthModule } from './auth/auth.module';
@@ -19,13 +19,19 @@ import { AuthV2Controller } from './auth-v2/auth-v2.controller';
       isGlobal: true,
       envFilePath: '.env',
     }),
-    // SequelizeModule.forRoot({
-    //   ...databaseConfig,
-    //   models: [User],
-    // }),
-    MongooseModule.forRoot(
-      'mongodb+srv://avinashkolluru1666_db_user:VXWJy2QSw02Ykg0T@myfirstcluster.d6ixivc.mongodb.net/practice?retryWrites=true&w=majority&appName=myfirstCluster',
-    ),
+    // Conditionally enable MongoDB (Atlas) or PostgreSQL (local) based on DB_TYPE env variable
+    ...(process.env.DB_TYPE === 'postgres'
+      ? [
+          SequelizeModule.forRoot({
+            ...databaseConfig,
+            models: [User],
+          }),
+        ]
+      : [
+          MongooseModule.forRoot(
+            'mongodb+srv://avinashkolluru1666_db_user:VXWJy2QSw02Ykg0T@myfirstcluster.d6ixivc.mongodb.net/practice?retryWrites=true&w=majority&appName=myfirstCluster',
+          ),
+        ]),
     UsersModule,
     AuthModule,
     ThrottlerModule.forRoot({

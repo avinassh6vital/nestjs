@@ -11,3 +11,7 @@ export const databaseConfig: SequelizeModuleOptions = {
   synchronize: true, // Set to false in production
   logging: true,
 };
+
+export const mongooseConfig = {
+  uri: 'mongodb+srv://avinashkolluru1666_db_user:VXWJy2QSw02Ykg0T@myfirstcluster.d6ixivc.mongodb.net/?appName=myfirstCluster',
+};

@@ -11,3 +11,7 @@ export const databaseConfig: SequelizeModuleOptions = {
   synchronize: true, // Set to false in production
   logging: true,
 };
+
+export const mongooseConfig = {
+  uri: process.env.MONGO_URI || 'mongodb://localhost:27017/practice',
+};

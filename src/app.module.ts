@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { AppController } from './app.controller';
-import { databaseConfig } from './config/database.config';
+import { databaseConfig, mongooseConfig } from './config/database.config';
 import { User } from './models/user.model';
 import { UsersModule } from './users/users.module';
 import { ThrottlerModule } from '@nestjs/throttler';
@@ -11,6 +11,7 @@ import { AuthModule } from './auth/auth.module';
 import { TasksService } from './tasks-service/tasks-service.service';
 //import { LoginController } from './login/login.controller';
 import { AuthV2Controller } from './auth-v2/auth-v2.controller';
+import { MongooseModule } from '@nestjs/mongoose';
 
 @Module({
   imports: [
@@ -44,6 +45,7 @@ import { AuthV2Controller } from './auth-v2/auth-v2.controller';
       ],
     }),
     AuthModule,
+    MongooseModule.forRoot(mongooseConfig.uri),
     //ScheduleModule.forRoot(),
   ],
   controllers: [AppController, AuthV2Controller],
